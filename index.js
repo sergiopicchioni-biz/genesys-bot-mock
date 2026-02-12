@@ -20,18 +20,22 @@ app.post('/botconnector', (req, res) => {
 
   const response = {
     session: {
-      id: (body.session && body.session.id) || 'demo-session-123',
+      id: (body.session && body.session.id) || 'demo-session-XXX',
       state: /fine|stop|termina/i.test(userText) ? 'ended' : 'inProgress'
     },
-    output: {
-      messages: [
-        {
-          type: 'Text',
-          text: botText
-        }
-      ]
-    }
-  };
+  output: {
+    intent: {
+      name: 'handover',   // deve esistere nella botlist
+      confidence: 1.0
+    },
+    messages: [
+      {
+        type: 'Text',
+        text: botText
+      }
+    ]
+  }
+};
  console.log('Risposta BotConnector:', JSON.stringify(response, null, 2));
   return res.json(response);
 });
