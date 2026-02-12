@@ -12,36 +12,100 @@ app.post('/botconnector', (req, res) => {
     body?.inputMessage?.text ??
     '';
 
-  let botText = 'Scrivi "ciao" per iniziare o "stop" per uscire.';
-  let intentName = 'handover';
+  // Configurazione di base
   let botState = 'MOREDATA';
+  let intentName = 'Success';
+  let replyMessages = [];
 
-  if (/ciao/i.test(userText)) {
-    botText = 'Ciao! Sono il bot di demo. Scrivi "stop" quando hai finito.';
-    intentName = 'handover';
-    botState = 'MOREDATA';
+  // Logica dei casi richiesti
+  if (/testo/i.test(userText)) {
+    // 1. Testo semplice
+    replyMessages.push({
+      type: 'Text',
+      text: 'Questo è un messaggio di testo semplice.'
+    });
+
+  } else if (/array/i.test(userText)) {
+    // 2. Array di testi (due messaggi separati)
+    replyMessages.push(
+      { type: 'Text', text: 'Primo messaggio.' },
+      { type: 'Text', text: 'Secondo messaggio.' }
+    );
+
+  } else if (/url markdown/i.test(userText)) {
+    // 4. URL come markdown (se il canale lo supporta nel testo)
+    replyMessages.push({
+      type: 'Text',
+      text: 'Ecco il link formattato: [Google](https://www.google.com)'
+    });
+
+  } else if (/url/i.test(userText)) {
+    // 3. URL strutturato (Link Button in una Card, più robusto del markdown)
+    // Nota: lo schema non ha un tipo "Url" diretto, si usa una Card o Text con link
+    replyMessages.push({
+      type: 'Structured',
+      content: [
+        {
+          contentType: 'Card',
+          card: {
+            title: 'Link Esterno',
+            description: 'Clicca per aprire',
+            actions: [
+              {
+                type: 'Link',
+                text: 'Apri Google', // label pulsante
+                url: 'https://www.google.com'
+              }
+            ]
+          }
+        }
+      ]
+    });
+
+  } else if (/quick/i.test(userText)) {
+    // 5. Quick Reply ("Sì", "No")
+    replyMessages.push({
+      type: 'Structured',
+      content: [
+        {
+          contentType: 'QuickReply',
+          quickReply: {
+            text: 'Sì',
+            payload: 'YES',
+            action: 'Message'
+          }
+        },
+        {
+          contentType: 'QuickReply',
+          quickReply: {
+            text: 'No',
+            payload: 'NO',
+            action: 'Message'
+          }
+        }
+      ]
+    });
+
   } else if (/stop/i.test(userText)) {
-    botText = 'Ok, chiudo e ti passo a un operatore. A presto!';
-    intentName = 'handover';
+    // Caso uscita
+    replyMessages.push({ type: 'Text', text: 'Chiusura bot.' });
     botState = 'COMPLETE';
-  } else if (userText) {
-    botText = `Hai scritto: "${userText}". Rispondi con "stop" per uscire.`;
     intentName = 'handover';
-    botState = 'MOREDATA';
+
+  } else {
+    // Default fallback
+    replyMessages.push({
+      type: 'Text',
+      text: 'Comandi: "testo", "array", "url", "url markdown", "quick", "stop".'
+    });
   }
 
   const response = {
     botState,
     intent: intentName,
     confidence: 1,
-    replymessages: [
-      { type: 'Text', text: botText }
-    ],
-    session: {
-      botSessionId: body.botSessionId || null,
-      genesysConversationId: body.genesysConversationId || null,
-      languageCode: body.languageCode || null
-    }
+    replymessages: replyMessages, // array di oggetti (Text o Structured)
+    session: body.session || {}
   };
 
   console.log('Risposta BotConnector:', JSON.stringify(response, null, 2));
