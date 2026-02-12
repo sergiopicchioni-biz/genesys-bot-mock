@@ -32,7 +32,7 @@ app.post('/botconnector', (req, res) => {
       ]
     }
   };
-
+ console.log('Risposta BotConnector:', JSON.stringify(response, null, 2));
   return res.json(response);
 });
 
