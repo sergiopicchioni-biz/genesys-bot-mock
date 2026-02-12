@@ -7,51 +7,47 @@ app.post('/botconnector', (req, res) => {
   const body = req.body || {};
   console.log('Richiesta BotConnector:', JSON.stringify(body, null, 2));
 
-  const userText = body?.input?.text || '';
+  const userText =
+    body?.input?.text ??
+    body?.inputMessage?.text ??
+    '';
 
-  let botText = 'Ciao, sono il bot mock su Render.';
-  let intentName = 'Success';   // intent generico
-  let botState = 'MOREDATA';    // continua conversazione
+  let botText = 'Scrivi "ciao" per iniziare o "stop" per uscire.';
+  let intentName = 'handover';
+  let botState = 'MOREDATA';
 
-  if (/ciao|buongiorno|hello/i.test(userText)) {
-    botText = 'Ciao! Come posso aiutarti oggi?';
+  if (/ciao/i.test(userText)) {
+    botText = 'Ciao! Sono il bot di demo. Scrivi "stop" quando hai finito.';
     intentName = 'handover';
     botState = 'MOREDATA';
-  } else if (/operatore|agente|handover|help/i.test(userText)) {
-    botText = 'Certo che ti aiuto.';
-    intentName = 'handover';   // deve esistere nella botlist
-    botState = 'COMPLETE';     // esce dal bot
-  } else if (/fine|stop|termina|chiudi/i.test(userText)) {
-    botText = 'Ok, chiudo la conversazione. A presto!';
+  } else if (/stop/i.test(userText)) {
+    botText = 'Ok, chiudo e ti passo a un operatore. A presto!';
     intentName = 'handover';
-    botState = 'COMPLETE';     // chiude senza handover
+    botState = 'COMPLETE';
   } else if (userText) {
-    botText = `Hai scritto: "${userText}". Dimmi "operatore" per parlare con un agente.`;
+    botText = `Hai scritto: "${userText}". Rispondi con "stop" per uscire.`;
     intentName = 'handover';
     botState = 'MOREDATA';
   }
 
   const response = {
-    botState: botState,
+    botState,
     intent: intentName,
     confidence: 1,
     replymessages: [
-      {
-        type: 'Text',
-        text: botText
-      }
+      { type: 'Text', text: botText }
     ],
-    session: body.session || {}
+    session: {
+      botSessionId: body.botSessionId || null,
+      genesysConversationId: body.genesysConversationId || null,
+      languageCode: body.languageCode || null
+    }
   };
 
   console.log('Risposta BotConnector:', JSON.stringify(response, null, 2));
   return res.json(response);
 });
 
-
-app.get('/', (req, res) => {
-  res.send('Genesys Bot Mock è vivo');
-});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log('Bot mock su porta', PORT));
