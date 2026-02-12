@@ -4,29 +4,38 @@ const app = express();
 app.use(express.json());
 
 app.post('/botconnector', (req, res) => {
-  console.log('Richiesta BotConnector:', JSON.stringify(req.body, null, 2));
+  const body = req.body || {};
+  console.log('Richiesta BotConnector:', JSON.stringify(body, null, 2));
+
+  const input = body.input || {};
+  const userText = input.text || '';
+
+  // Logica banale di risposta
+  let botText = 'Ciao, sono il bot mock su Render.';
+  if (/ciao|buongiorno/i.test(userText)) {
+    botText = 'Ciao! Come posso aiutarti oggi?';
+  } else if (/fine|stop|termina/i.test(userText)) {
+    botText = 'Ok, chiudo la conversazione. A presto!';
+  }
 
   const response = {
     session: {
-      id: req.body?.session?.id || 'demo-session-123',
-      state: 'inProgress'
+      id: (body.session && body.session.id) || 'demo-session-123',
+      state: /fine|stop|termina/i.test(userText) ? 'ended' : 'inProgress'
     },
     output: {
       messages: [
         {
           type: 'Text',
-          text: 'Ciao! Sono un bot di demo collegato via Bot Connector.'
-        },
-        {
-          type: 'Text',
-          text: 'Per questa PoC rispondo sempre con messaggi hardcoded.'
+          text: botText
         }
       ]
     }
   };
 
-  res.json(response);
+  return res.json(response);
 });
+
 
 app.get('/', (req, res) => {
   res.send('Genesys Bot Mock è vivo');
