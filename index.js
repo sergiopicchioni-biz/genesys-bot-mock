@@ -40,8 +40,7 @@ app.post('/botconnector', (req, res) => {
     });
 
   } else if (/url/i.test(userText)) {
-    // 3. URL strutturato (Link Button in una Card, più robusto del markdown)
-    // Nota: lo schema non ha un tipo "Url" diretto, si usa una Card o Text con link
+    // 3. URL strutturato (Link Button in una Card
     replyMessages.push({
       type: 'Structured',
       content: [
@@ -105,7 +104,11 @@ app.post('/botconnector', (req, res) => {
     intent: intentName,
     confidence: 1,
     replymessages: replyMessages, // array di oggetti (Text o Structured)
-    session: body.session || {}
+    session: {
+      botSessionId: body.botSessionId || null,
+      genesysConversationId: body.genesysConversationId || null,
+      languageCode: body.languageCode || null
+    }
   };
 
   console.log('Risposta BotConnector:', JSON.stringify(response, null, 2));
