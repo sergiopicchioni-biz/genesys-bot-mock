@@ -14,7 +14,9 @@ app.post('/botconnector', (req, res) => {
 
   // Configurazione di base
   let botState = 'MOREDATA';
-  let intentName = '';
+  // Genera un suffisso univoco ogni volta
+  const uniqueId = new Date().getTime(); 
+  let intentName = `Info_${uniqueId}`; // Es: Info_1739401234567
   let replyMessages = [];
 
   // Logica dei casi richiesti
