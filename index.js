@@ -14,7 +14,7 @@ app.post('/botconnector', (req, res) => {
 
   // Configurazione di base
   let botState = 'MOREDATA';
-  let intentName = userText;
+  let intentName = '';
   let replyMessages = [];
 
   // Logica dei casi richiesti
