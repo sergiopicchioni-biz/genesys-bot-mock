@@ -10,33 +10,39 @@ app.post('/botconnector', (req, res) => {
   const input = body.input || {};
   const userText = input.text || '';
 
-  // Logica banale di risposta
   let botText = 'Ciao, sono il bot mock su Render.';
+  let intentName = 'handover';   // esiste nella botlist
+  let isFinal = false;
+
   if (/ciao|buongiorno/i.test(userText)) {
     botText = 'Ciao! Come posso aiutarti oggi?';
-  } else if (/fine|stop|termina/i.test(userText)) {
-    botText = 'Ok, chiudo la conversazione. A presto!';
+    intentName = 'smalltalk';
+  } else if (/operatore|agente|handover/i.test(userText)) {
+    botText = 'Ti passo a un operatore umano.';
+    intentName = 'handover';
+    isFinal = true;
   }
 
   const response = {
-    session: {
-      id: (body.session && body.session.id) || 'demo-session-XXX',
-      state: /fine|stop|termina/i.test(userText) ? 'ended' : 'inProgress'
-    },
-  output: {
+    // stato della sessione bot lato Genesys
+    botState: isFinal ? 'ENDED' : 'IN_PROGRESS',
+    // intent riconosciuto per questo turno
     intent: {
-      name: 'handover',   // deve esistere nella botlist
+      name: intentName,
       confidence: 1.0
     },
-    messages: [
+    // messaggi che il bot manda al cliente
+    replyMessages: [
       {
         type: 'Text',
         text: botText
       }
-    ]
-  }
-};
- console.log('Risposta BotConnector:', JSON.stringify(response, null, 2));
+    ],
+    // opzionale: variabili di sessione
+    session: body.session || {}
+  };
+
+  console.log('Risposta BotConnector:', JSON.stringify(response, null, 2));
   return res.json(response);
 });
 
