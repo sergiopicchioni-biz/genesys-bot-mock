@@ -61,10 +61,10 @@ app.post('/botconnector', (req, res) => {
       ]
     });
 
-  } else if (/quick/i.test(userText)) {
-    // 5. Quick Reply ("Sì", "No")
+   } else if (/quick/i.test(userText)) {
     replyMessages.push({
-      type: 'Structured',
+      type: 'Structured', 
+      text: 'Scegli un opzione:', // <--- QUESTO CAMPO È OBBLIGATORIO PER LE QUICK REPLY
       content: [
         {
           contentType: 'QuickReply',
