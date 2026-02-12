@@ -7,38 +7,40 @@ app.post('/botconnector', (req, res) => {
   const body = req.body || {};
   console.log('Richiesta BotConnector:', JSON.stringify(body, null, 2));
 
-  const input = body.input || {};
-  const userText = input.text || '';
+  const userText = body?.input?.text || '';
 
   let botText = 'Ciao, sono il bot mock su Render.';
-  let intentName = 'handover';   // esiste nella botlist
-  let isFinal = false;
+  let intentName = 'Success';   // intent generico
+  let botState = 'MOREDATA';    // continua conversazione
 
-  if (/ciao|buongiorno/i.test(userText)) {
+  if (/ciao|buongiorno|hello/i.test(userText)) {
     botText = 'Ciao! Come posso aiutarti oggi?';
-    intentName = 'smalltalk';
-  } else if (/operatore|agente|handover/i.test(userText)) {
-    botText = 'Ti passo a un operatore umano.';
     intentName = 'handover';
-    isFinal = true;
+    botState = 'MOREDATA';
+  } else if (/operatore|agente|handover|help/i.test(userText)) {
+    botText = 'Certo che ti aiuto.';
+    intentName = 'handover';   // deve esistere nella botlist
+    botState = 'COMPLETE';     // esce dal bot
+  } else if (/fine|stop|termina|chiudi/i.test(userText)) {
+    botText = 'Ok, chiudo la conversazione. A presto!';
+    intentName = 'handover';
+    botState = 'COMPLETE';     // chiude senza handover
+  } else if (userText) {
+    botText = `Hai scritto: "${userText}". Dimmi "operatore" per parlare con un agente.`;
+    intentName = 'handover';
+    botState = 'MOREDATA';
   }
 
   const response = {
-    // stato della sessione bot lato Genesys
-    botState: isFinal ? 'ENDED' : 'IN_PROGRESS',
-    // intent riconosciuto per questo turno
-    intent: {
-      name: intentName,
-      confidence: 1.0
-    },
-    // messaggi che il bot manda al cliente
-    replyMessages: [
+    botState: botState,
+    intent: intentName,
+    confidence: 1,
+    replymessages: [
       {
         type: 'Text',
         text: botText
       }
     ],
-    // opzionale: variabili di sessione
     session: body.session || {}
   };
 
