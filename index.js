@@ -14,7 +14,7 @@ app.post('/botconnector', (req, res) => {
 
   // Configurazione di base
   let botState = 'MOREDATA';
-  let intentName = 'handover';
+  let intentName = 'working';
   let replyMessages = [];
 
   // Logica dei casi richiesti
