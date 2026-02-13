@@ -147,7 +147,6 @@ app.post('/botconnector', (req, res) => {
   } else if (/carousel/i.test(userText)) {
       replyMessages.push({
           type: 'Structured',
-          text: 'Ecco il carosello:', // Testo fallback 
           content: [{ 
             contentType: 'Carousel',
             carousel: {
