@@ -128,16 +128,14 @@ app.post('/botconnector', (req, res) => {
                   card: {
                       title: 'Opzioni Avanzate',
                       description: 'Scegli un comando',
-                      image: 'https://dummyimage.com/200x100/000000/fff.jpg&text=Image...',
+                      image: 'https://dummyimage.com/200x100/000000/fff.jpg',
                       defaultAction: { 
                            type: 'Link',  
                            url: 'http://www.samplesite.com/flights/norway'
                       },
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' }, // DeepLink -> Link
-                          { type: 'Postback', text: 'Menu', payload: 'menu' },
-                          { type: 'Postback', text: 'Conferma', payload: 'CMD_YES' },
-                          { type: 'Postback', text: 'Annulla', payload: 'CMD_NO' }
+                          { type: 'Postback', text: 'Menu', payload: 'menu' }
                       ]
                   }
               }
@@ -164,7 +162,7 @@ app.post('/botconnector', (req, res) => {
                     {
                       title: 'Card #2',
                       description: 'Opzioni',
-                      image: 'https://dummyimage.com/200x100/00ff00/fff.jpg&text=Options...',
+                      image: 'https://dummyimage.com/200x100/00ff00/fff.jpg',
                       defaultAction: { type: 'Link', url: 'https://www.google.com' }, 
                       actions: [
                           { type: 'Postback', text: 'url', payload: 'url' },
