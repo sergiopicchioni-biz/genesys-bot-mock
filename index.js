@@ -8,8 +8,8 @@ app.post('/botconnector', (req, res) => {
   console.log('Richiesta BotConnector:', JSON.stringify(body, null, 2));
 
   // Input
-  let userText = body.input?.text || '';
-  let userPayload = body.input?.payload || ''; 
+  let userText = body.inputMessage?.text || '';
+  let userPayload = body.inputMessage  ?.payload || ''; 
 
   console.log(`[Input] Text: "${userText}" | Payload: "${userPayload}"`);
   
@@ -20,8 +20,13 @@ app.post('/botconnector', (req, res) => {
   let replyMessages = [];
 
   // --- LOGICA UNIFICATA (Catena if-else if) ---
+  if (userPayload === 'THUMB_UP' || userText === '👍') {
+      replyMessages.push({ type: 'Text', text: 'Grazie per il feedback positivo! 😊' });
 
-  if (userPayload === 'CMD_YES' || userText === 'CMD_YES') {
+  } else if (userPayload === 'THUMB_DOWN' || userText === '👎') {
+      replyMessages.push({ type: 'Text', text: 'Mi dispiace. Cercherò di migliorare.' });
+
+  } else if (userPayload === 'CMD_YES' || userText === 'CMD_YES') {
       replyMessages.push({ type: 'Text', text: 'Hai premuto SÌ (Payload ricevuto: CMD_YES)' });
 
   } else if (userPayload === 'CMD_NO' || userText === 'CMD_NO') {
@@ -79,6 +84,56 @@ app.post('/botconnector', (req, res) => {
                           { type: 'Postback', text: 'Annulla', payload: 'CMD_NO' }
                       ]
                   }
+              }
+          ]
+      });
+  } else if (/misto/i.test(userText)) {
+      // RISPOSTA MULTIPLA (Testo + Card + QuickReply)
+      
+      // 1. Messaggio di testo introduttivo
+      replyMessages.push({ 
+          type: 'Text', 
+          text: 'Ecco una risposta mista: un testo, un link e una domanda.' 
+      });
+
+      // 2. Card con Link (Messaggio Strutturato)
+      replyMessages.push({
+          type: 'Structured',
+          text: 'Risorsa consigliata:', // Testo fallback
+          content: [
+              {
+                  contentType: 'Card',
+                  card: {
+                      title: 'Documentazione',
+                      description: 'Leggi la guida',
+                      actions: [
+                          { type: 'Link', text: 'Vai al sito', url: 'https://www.genesys.com' }
+                      ]
+                  }
+              }
+          ]
+      });
+
+      // 3. Quick Reply (Pollici Su/Giù)
+      replyMessages.push({
+          type: 'Structured',
+          text: 'Ti è stato utile?', // Obbligatorio per Quick Reply
+          content: [
+              { 
+                  contentType: 'QuickReply', 
+                  quickReply: { 
+                      text: '👍', // Testo visibile (Emoji)
+                      payload: 'THUMB_UP', 
+                      action: 'Message' 
+                  } 
+              },
+              { 
+                  contentType: 'QuickReply', 
+                  quickReply: { 
+                      text: '👎', 
+                      payload: 'THUMB_DOWN', 
+                      action: 'Message' 
+                  } 
               }
           ]
       });
