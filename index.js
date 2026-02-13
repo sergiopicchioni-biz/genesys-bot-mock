@@ -80,8 +80,8 @@ app.post('/botconnector', (req, res) => {
               {
                   contentType: 'Card',
                   card: {
-                      title: 'Link Esterno',
-                      description: 'Clicca per aprire',
+                      title: 'GC Card',
+                      description: 'Clicca!',
                       actions: [
                           { type: 'Link', text: 'Apri Google', url: 'https://www.google.com' },
                           { type: 'Link', text: 'Apri Home', url: 'https://www.example.com' }
@@ -127,6 +127,8 @@ app.post('/botconnector', (req, res) => {
                       title: 'Opzioni Avanzate',
                       description: 'Scegli un comando',
                       actions: [
+                           { type: 'Link', text: 'Apri Google', url: 'https://www.google.com' },
+                          { type: 'Postback', text: 'Menu', payload: 'menu' },
                           { type: 'Postback', text: 'Conferma', payload: 'CMD_YES' },
                           { type: 'Postback', text: 'Annulla', payload: 'CMD_NO' }
                       ]
@@ -149,7 +151,7 @@ app.post('/botconnector', (req, res) => {
     replyMessages.push({ type: 'Text', text: 'Ecco il link formattato: [Google](https://www.google.com)' });
 
       // 2. Card con Link (Messaggio Strutturato)
-      replyMessages.push({
+/*      replyMessages.push({
           type: 'Structured',
           text: 'Risorsa consigliata:', // Testo fallback
           content: [
@@ -165,7 +167,7 @@ app.post('/botconnector', (req, res) => {
               }
           ]
       });
-
+*/
       // 3. Quick Reply (Pollici Su/Giù)
       replyMessages.push({
           type: 'Structured',
