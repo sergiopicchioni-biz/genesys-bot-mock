@@ -145,7 +145,6 @@ app.post('/botconnector', (req, res) => {
               { 
                   contentType: 'Card 2', 
                   card: {
-                      title: 'Opzioni Avanzate',
                       description: 'Scegli un comando',
                      image: 'https://dummyimage.com/200x100/000000/fff.jpg',
 
@@ -166,8 +165,6 @@ app.post('/botconnector', (req, res) => {
               { 
                   contentType: 'Card 3', 
                   card: {
-                      title: 'Opzioni Avanzate',
-                      description: 'Scegli un comando',
                      image: 'https://dummyimage.com/200x100/000000/fff.jpg',
                       defaultAction: { 
                            type: 'Link',  
