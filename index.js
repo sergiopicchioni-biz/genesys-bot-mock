@@ -202,11 +202,11 @@ app.post('/botconnector', (req, res) => {
           type: 'Structured',
           text: 'Scegli un opzione:',
           content: [
-              { contentType: 'QuickReply', quickReply: { text: 'menu', payload: '', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'misto', payload: '', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'url', payload: '', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'quick', payload: '', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'stop', payload: '', action: 'Message' } }
+              { contentType: 'QuickReply', quickReply: { text: 'menu', payload: 'menu', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'misto', payload: 'misto', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'url', payload: 'url', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'quick', payload: 'quick', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'stop', payload: 'stop', action: 'Message' } }
           ]
       });
   }
