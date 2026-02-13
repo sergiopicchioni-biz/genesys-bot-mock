@@ -128,7 +128,13 @@ app.post('/botconnector', (req, res) => {
                   card: {
                       title: 'Opzioni Avanzate',
                       description: 'Scegli un comando',
+                      image: 'https://dummyimage.com/200x100/000000/fff.jpg&text=Image...',
+                      defaultAction: { 
+                           type: 'Link',   text: 'My Site',
+                           url: 'http://www.samplesite.com/flights/norway'
+                      },
                       actions: [
+                          { type: 'Link', text: 'DeepLink', url: 'myapp://product123' }, // DeepLink -> Link
                           { type: 'Postback', text: 'Menu', payload: 'menu' },
                           { type: 'Postback', text: 'Conferma', payload: 'CMD_YES' },
                           { type: 'Postback', text: 'Annulla', payload: 'CMD_NO' }
@@ -136,6 +142,39 @@ app.post('/botconnector', (req, res) => {
                   }
               }
           ]
+      });
+
+  } else if (/carousel/i.test(userText)) {
+      replyMessages.push({
+          type: 'Structured',
+          text: 'Ecco il carosello:', // Testo fallback 
+          content: [{ 
+            contentType: 'Carousel',
+            carousel: {
+                cards: [
+                    {
+                      title: 'Card #1',
+                      description: 'Scegli',
+                      image: 'https://dummyimage.com/200x100/000000/fff.jpg&text=Image...',
+                      defaultAction: { type: 'Link',  text: 'Apri Example' ,url: 'http://www.example.com' }, 
+                      actions: [
+                          { type: 'Link', text: 'DeepLink', url: 'myapp://product123' },
+                          { type: 'Postback', text: 'Menu', payload: 'menu' }
+                      ]
+                    },
+                    {
+                      title: 'Card #2',
+                      description: 'Opzioni',
+                      image: 'https://dummyimage.com/200x100/00ff00/fff.jpg&text=Options...',
+                      defaultAction: { type: 'Link',  text: 'Apri Google', url: 'https://www.google.com' }, 
+                      actions: [
+                          { type: 'Postback', text: 'url', payload: 'url' },
+                          { type: 'Postback', text: 'misto', payload: 'misto' }
+                      ]
+                    }
+                ]
+            }
+          }]
       });
   } else if (/misto/i.test(userText)) {
       // RISPOSTA MULTIPLA (Testo + Card + QuickReply)
@@ -149,26 +188,10 @@ app.post('/botconnector', (req, res) => {
           type: 'Text', 
           text: 'seconda riga' 
       });
+   // 2. MArkdown
     replyMessages.push({ type: 'Text', text: 'Ecco il link formattato: [Google](https://www.google.com)' });
 
-      // 2. Card con Link (Messaggio Strutturato)
-/*      replyMessages.push({
-          type: 'Structured',
-          text: 'Risorsa consigliata:', // Testo fallback
-          content: [
-              {
-                  contentType: 'Card',
-                  card: {
-                      title: 'Documentazione',
-                      description: 'Leggi la guida',
-                      actions: [
-                          { type: 'Link', text: 'Vai al sito', url: 'https://www.genesys.com' }
-                      ]
-                  }
-              }
-          ]
-      });
-*/
+
       // 3. Quick Reply (Pollici Su/Giù)
       replyMessages.push({
           type: 'Structured',
@@ -192,10 +215,6 @@ app.post('/botconnector', (req, res) => {
               }
           ]
       });
-      replyMessages.push({ 
-          type: 'Text', 
-          text: 'fine riga' 
-      });
   } else {
       // Default
       replyMessages.push({
@@ -205,7 +224,8 @@ app.post('/botconnector', (req, res) => {
               { contentType: 'QuickReply', quickReply: { text: 'menu', payload: 'menu', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'misto', payload: 'misto', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'url', payload: 'url', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'quick', payload: 'quick', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'carousel', payload: 'carousel', action: 'Message' } },
+             { contentType: 'QuickReply', quickReply: { text: 'quick', payload: 'quick', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'stop', payload: 'stop', action: 'Message' } }
           ]
       });
