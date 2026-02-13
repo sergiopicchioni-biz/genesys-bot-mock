@@ -127,7 +127,6 @@ app.post('/botconnector', (req, res) => {
                       title: 'Opzioni Avanzate',
                       description: 'Scegli un comando',
                       actions: [
-                           { type: 'Link', text: 'Apri Google', url: 'https://www.google.com' },
                           { type: 'Postback', text: 'Menu', payload: 'menu' },
                           { type: 'Postback', text: 'Conferma', payload: 'CMD_YES' },
                           { type: 'Postback', text: 'Annulla', payload: 'CMD_NO' }
