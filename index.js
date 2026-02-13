@@ -143,7 +143,7 @@ app.post('/botconnector', (req, res) => {
           text: 'Menu 2 img:',
           content: [
               { 
-                  contentType: 'Card 2', 
+                  contentType: 'Card', 
                   card: {
                       description: 'Scegli un comando',
                      image: 'https://dummyimage.com/200x100/000000/fff.jpg',
@@ -163,9 +163,9 @@ app.post('/botconnector', (req, res) => {
           text: 'Menu 3 full:',
           content: [
               { 
-                  contentType: 'Card 3', 
+                  contentType: 'Card', 
                   card: {
-                     image: 'https://dummyimage.com/200x100/000000/fff.jpg',
+                     image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
                       defaultAction: { 
                            type: 'Link',  
                            url: 'http://www.samplesite.com/flights/norway'
