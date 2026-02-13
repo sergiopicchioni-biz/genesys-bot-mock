@@ -128,13 +128,61 @@ app.post('/botconnector', (req, res) => {
                   card: {
                       title: 'Opzioni Avanzate',
                       description: 'Scegli un comando',
-                      image: 'https://dummyimage.com/200x100/000000/fff.jpg',
+                  /*    image: 'https://dummyimage.com/200x100/000000/fff.jpg',
+                      defaultAction: { 
+                           type: 'Link',  
+                           url: 'http://www.samplesite.com/flights/norway'
+                      },*/
+                      actions: [
+                          { type: 'Link', text: 'DeepLink', url: 'myapp://product123' }, 
+                          { type: 'Postback', text: 'Menu', payload: 'menu' }
+                      ]
+                  }
+              }
+          ]
+      });
+
+  } else if (/menu2/i.test(userText)) {
+      replyMessages.push({
+          type: 'Structured',
+          text: 'Menu Comandi:',
+          content: [
+              { 
+                  contentType: 'Card', 
+                  card: {
+                      title: 'Opzioni Avanzate',
+                      description: 'Scegli un comando',
+                  /*    image: 'https://dummyimage.com/200x100/000000/fff.jpg',
+                      defaultAction: { 
+                           type: 'Link',  
+                           url: 'http://www.samplesite.com/flights/norway'
+                      },*/
+                      actions: [
+                          { type: 'Postback', text: 'DeepLink', payload: 'myapp://product123' },
+                          { type: 'Postback', text: 'Menu', payload: 'menu' }
+                      ]
+                  }
+              }
+          ]
+      });
+
+  } else if (/menu3/i.test(userText)) {
+      replyMessages.push({
+          type: 'Structured',
+          text: 'Menu Comandi:',
+          content: [
+              { 
+                  contentType: 'Card', 
+                  card: {
+                      title: 'Opzioni Avanzate',
+                      description: 'Scegli un comando',
+                     image: 'https://dummyimage.com/200x100/000000/fff.jpg',
                       defaultAction: { 
                            type: 'Link',  
                            url: 'http://www.samplesite.com/flights/norway'
                       },
                       actions: [
-                          { type: 'Link', text: 'DeepLink', url: 'myapp://product123' }, // DeepLink -> Link
+                          { type: 'Postback', text: 'DeepLink', payload: 'myapp://product123' },
                           { type: 'Postback', text: 'Menu', payload: 'menu' }
                       ]
                   }
