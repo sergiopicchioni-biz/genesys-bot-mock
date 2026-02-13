@@ -5,13 +5,48 @@ app.use(express.json());
 
 app.post('/botconnector', (req, res) => {
   const body = req.body || {};
-  console.log('Richiesta BotConnector:', JSON.stringify(body, null, 2));
+  const msg = body.inputMessage || {}; // Lavoriamo SOLO su inputMessage
 
-  // Input
-  let userText = body.inputMessage?.text || '';
-  let userPayload = body.inputMessage  ?.payload || ''; 
+  // --- ESTRAZIONE DATI ---
+  let userText = '';
+  let userPayload = '';
+
+  // Caso 1: Messaggio di Testo Semplice
+  if (msg.type === 'Text') {
+      userText = msg.text || '';
+      // A volte il payload è nel testo se non c'è altro
+  } 
+  
+  // Caso 2: Messaggio Strutturato (QuickReply, Postback, ButtonResponse)
+  else if (msg.type === 'Structured') {
+      const content = msg.content || [];
+      
+      // Cerchiamo un elemento che abbia una risposta pulsante (ButtonResponse)
+      const buttonItem = content.find(c => c.contentType === 'ButtonResponse');
+      
+      if (buttonItem && buttonItem.buttonResponse) {
+          // Estraggo testo e payload dal pulsante cliccato
+          // Nota: Funziona sia per type="QuickReply" che per type="Button"
+          userText = buttonItem.buttonResponse.text || ''; 
+          userPayload = buttonItem.buttonResponse.payload || '';
+      }
+      // Se non trovo ButtonResponse, provo a cercare un generico 'payload' nel content
+      else {
+          const payloadItem = content.find(c => c.payload);
+          if (payloadItem) {
+              userPayload = payloadItem.payload;
+              userText = payloadItem.text || '';
+          }
+      }
+  }
+
+  // Fallback estremo (se per qualche motivo i campi sono fuori standard)
+  if (!userText && msg.text) userText = msg.text;
+  if (!userPayload && msg.payload) userPayload = msg.payload;
 
   console.log(`[Input] Text: "${userText}" | Payload: "${userPayload}"`);
+
+  // ... (Configurazione botState, intentName, ecc.) ...
   
   // Config
   let botState = 'MOREDATA';
