@@ -71,7 +71,7 @@ app.post('/botconnector', (req, res) => {
 
   } else if (/stop|esci/i.test(userText)) {
       botState = 'COMPLETE';
-      intentName = 'Handover';
+      intentName = 'handover';
       replyMessages.push({ type: 'Text', text: 'Chiusura bot.' });
 
   }  else if (/url/i.test(userText)) {
