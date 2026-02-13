@@ -7,28 +7,27 @@ app.post('/botconnector', (req, res) => {
   const body = req.body || {};
   console.log('Richiesta BotConnector:', JSON.stringify(body, null, 2));
 
-   // 1. Recupero Input: Potrebbe essere testo O payload (se postback)
+  // Input
   let userText = body.input?.text || '';
-  let userPayload = body.input?.payload || ''; // <--- CATTURIAMO IL PAYLOAD
+  let userPayload = body.input?.payload || ''; 
 
   console.log(`[Input] Text: "${userText}" | Payload: "${userPayload}"`);
   
-  // Configurazione di base
+  // Config
   let botState = 'MOREDATA';
-  // Genera un suffisso univoco ogni volta
   const uniqueId = new Date().getTime(); 
-  let intentName = `Turn_${uniqueId}`; // Es: Info_1739401234567
+  let intentName = `Turn_${uniqueId}`; 
   let replyMessages = [];
 
-    if (userPayload === 'CMD_YES' || userText === 'CMD_YES') {
-      replyMessages.push({ type: 'Text', text: 'Hai premuto SÌ (Ho ricevuto il payload nascosto CMD_YES)' });
-  }
-  else if (userPayload === 'CMD_NO' || userText === 'CMD_NO') {
-      replyMessages.push({ type: 'Text', text: 'Hai premuto NO (Ho ricevuto il payload nascosto CMD_NO)' });
-  }
+  // --- LOGICA UNIFICATA (Catena if-else if) ---
 
-  // Logica dei casi richiesti
-if (/stop|esci/i.test(userText)) {
+  if (userPayload === 'CMD_YES' || userText === 'CMD_YES') {
+      replyMessages.push({ type: 'Text', text: 'Hai premuto SÌ (Payload ricevuto: CMD_YES)' });
+
+  } else if (userPayload === 'CMD_NO' || userText === 'CMD_NO') {
+      replyMessages.push({ type: 'Text', text: 'Hai premuto NO (Payload ricevuto: CMD_NO)' });
+
+  } else if (/stop|esci/i.test(userText)) {
       botState = 'COMPLETE';
       intentName = 'Handover';
       replyMessages.push({ type: 'Text', text: 'Chiusura bot.' });
@@ -49,7 +48,7 @@ if (/stop|esci/i.test(userText)) {
   } else if (/url/i.test(userText)) {
       replyMessages.push({
           type: 'Structured',
-          text: 'Link Utili:', // Sempre meglio mettere un testo anche qui
+          text: 'Link Utili:', 
           content: [
               {
                   contentType: 'Card',
@@ -58,7 +57,7 @@ if (/stop|esci/i.test(userText)) {
                       description: 'Clicca per aprire',
                       actions: [
                           { type: 'Link', text: 'Apri Google', url: 'https://www.google.com' },
-                          { type: 'Link', text: 'Apri Home', url: 'https://www.example.com' } // <--- CORRETTO (era Link 2)
+                          { type: 'Link', text: 'Apri Home', url: 'https://www.example.com' }
                       ]
                   }
               }
@@ -91,15 +90,18 @@ if (/stop|esci/i.test(userText)) {
           text: 'Comandi: "testo", "array", "url", "url markdown", "quick", "menu", "stop".'
       });
   }
+
+  // Costruzione Risposta
   const response = {
     botState,
     intent: intentName,
     confidence: 1,
-    replymessages: replyMessages, // array di oggetti (Text o Structured)
-    session: {
-      botSessionId: body.botSessionId || null,
-      genesysConversationId: body.genesysConversationId || null,
-      languageCode: body.languageCode || null
+    replymessages: replyMessages,
+    // Meglio usare body.session direttamente se possibile, altrimenti assicurati che body.botSessionId esista!
+    session: body.session || {
+      botSessionId: body.botSessionId || 'unknown',
+      genesysConversationId: body.genesysConversationId || 'unknown',
+      languageCode: body.languageCode || 'it-it'
     }
   };
 
