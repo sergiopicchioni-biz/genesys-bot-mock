@@ -7,17 +7,25 @@ app.post('/botconnector', (req, res) => {
   const body = req.body || {};
   console.log('Richiesta BotConnector:', JSON.stringify(body, null, 2));
 
-  const userText =
-    body?.input?.text ??
-    body?.inputMessage?.text ??
-    '';
+   // 1. Recupero Input: Potrebbe essere testo O payload (se postback)
+  let userText = body.input?.text || '';
+  let userPayload = body.input?.payload || ''; // <--- CATTURIAMO IL PAYLOAD
 
+  console.log(`[Input] Text: "${userText}" | Payload: "${userPayload}"`);
+  
   // Configurazione di base
   let botState = 'MOREDATA';
   // Genera un suffisso univoco ogni volta
   const uniqueId = new Date().getTime(); 
-  let intentName = `Info_${uniqueId}`; // Es: Info_1739401234567
+  let intentName = `Turn_${uniqueId}`; // Es: Info_1739401234567
   let replyMessages = [];
+
+    if (userPayload === 'CMD_YES' || userText === 'CMD_YES') {
+      replyMessages.push({ type: 'Text', text: 'Hai premuto SÌ (Ho ricevuto il payload nascosto CMD_YES)' });
+  }
+  else if (userPayload === 'CMD_NO' || userText === 'CMD_NO') {
+      replyMessages.push({ type: 'Text', text: 'Hai premuto NO (Ho ricevuto il payload nascosto CMD_NO)' });
+  }
 
   // Logica dei casi richiesti
   if (/testo/i.test(userText)) {
@@ -31,7 +39,8 @@ app.post('/botconnector', (req, res) => {
     // 2. Array di testi (due messaggi separati)
     replyMessages.push(
       { type: 'Text', text: 'Primo messaggio.' },
-      { type: 'Text', text: 'Secondo messaggio.' }
+      { type: 'Text', text: 'Secondo messaggio.' },
+      { type: 'Text', text: 'Ecco il link formattato: [Google](https://www.google.com)'}
     );
 
   } else if (/url markdown/i.test(userText)) {
@@ -56,6 +65,11 @@ app.post('/botconnector', (req, res) => {
                 type: 'Link',
                 text: 'Apri Google', // label pulsante
                 url: 'https://www.google.com'
+              },
+                {
+                type: 'Link 2',
+                text: 'Apri Home', // label pulsante
+                url: 'https://www.example.com'
               }
             ]
           }
@@ -93,7 +107,35 @@ app.post('/botconnector', (req, res) => {
     botState = 'COMPLETE';
     intentName = 'handover';
 
-  } else {
+  } 
+    else if (/menu/i.test(userText)) {
+      replyMessages.push({
+          type: 'Structured',
+          text: 'Ecco un menu con Postback (il testo che vedi è diverso dal dato che ricevo):',
+          content: [
+              { 
+                  contentType: 'Card', 
+                  card: {
+                      title: 'Opzioni Avanzate',
+                      description: 'Scegli un comando',
+                      actions: [
+                          { 
+                              type: 'Postback', // <--- Azione Postback, non Link
+                              text: 'Conferma Ordine', // Cosa vede l'utente
+                              payload: 'CMD_YES'       // Cosa riceve il bot
+                          },
+                          { 
+                              type: 'Postback',
+                              text: 'Annulla Tutto', 
+                              payload: 'CMD_NO' 
+                          }
+                      ]
+                  }
+              }
+          ]
+      });
+  }
+  else {
     // Default fallback
     replyMessages.push({
       type: 'Text',
