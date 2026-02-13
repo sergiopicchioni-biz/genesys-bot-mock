@@ -72,20 +72,7 @@ app.post('/botconnector', (req, res) => {
       intentName = 'Handover';
       replyMessages.push({ type: 'Text', text: 'Chiusura bot.' });
 
-  } else if (/quick/i.test(userText)) {
-      replyMessages.push({
-          type: 'Structured',
-          text: 'Scegli un opzione:',
-          content: [
-              { contentType: 'QuickReply', quickReply: { text: 'Sì', payload: 'YES', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'No', payload: 'NO', action: 'Message' } }
-          ]
-      });
-
-  } else if (/url markdown/i.test(userText)) {
-      replyMessages.push({ type: 'Text', text: 'Ecco il link formattato: [Google](https://www.google.com)' });
-
-  } else if (/url/i.test(userText)) {
+  }  else if (/url/i.test(userText)) {
       replyMessages.push({
           type: 'Structured',
           text: 'Link Utili:', 
@@ -130,6 +117,11 @@ app.post('/botconnector', (req, res) => {
           type: 'Text', 
           text: 'Ecco una risposta mista: un testo, un link e una domanda.' 
       });
+      replyMessages.push({ 
+          type: 'Text', 
+          text: 'seconda riga' 
+      });
+    replyMessages.push({ type: 'Text', text: 'Ecco il link formattato: [Google](https://www.google.com)' });
 
       // 2. Card con Link (Messaggio Strutturato)
       replyMessages.push({
@@ -176,8 +168,15 @@ app.post('/botconnector', (req, res) => {
   } else {
       // Default
       replyMessages.push({
-          type: 'Text',
-          text: 'Comandi: "testo", "array", "url", "url markdown", "quick", "menu", "stop".'
+          type: 'Structured',
+          text: 'Scegli un opzione:',
+          content: [
+              { contentType: 'QuickReply', quickReply: { text: 'menu', payload: 'menu', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'misto', payload: 'misto', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'url', payload: 'YES', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'Stop', payload: 'stop', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'No', payload: 'NO', action: 'Message' } }
+          ]
       });
   }
 
