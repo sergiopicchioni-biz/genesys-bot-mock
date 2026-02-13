@@ -4,6 +4,8 @@ const app = express();
 app.use(express.json());
 
 app.post('/botconnector', (req, res) => {
+  console.log('Chiamata BotConnector:', JSON.stringify(req, null, 2));
+  
   const body = req.body || {};
   const msg = body.inputMessage || {}; // Lavoriamo SOLO su inputMessage
 
