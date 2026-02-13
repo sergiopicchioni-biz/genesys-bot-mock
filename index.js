@@ -91,6 +91,31 @@ app.post('/botconnector', (req, res) => {
           ]
       });
 
+  } else if (/quick/i.test(userText)) {
+      // Quick Reply (Pollici Su/Giù)
+      replyMessages.push({
+          type: 'Structured',
+          text: 'Ti è stato utile?', // Obbligatorio per Quick Reply
+          content: [
+              { 
+                  contentType: 'QuickReply', 
+                  quickReply: { 
+                      text: '👍', // Testo visibile (Emoji)
+                      payload: 'THUMB_UP', 
+                      action: 'Message' 
+                  } 
+              },
+              { 
+                  contentType: 'QuickReply', 
+                  quickReply: { 
+                      text: '👎', 
+                      payload: 'THUMB_DOWN', 
+                      action: 'Message' 
+                  } 
+              }
+          ]
+      });
+
   } else if (/menu/i.test(userText)) {
       replyMessages.push({
           type: 'Structured',
@@ -164,18 +189,21 @@ app.post('/botconnector', (req, res) => {
               }
           ]
       });
-
+      replyMessages.push({ 
+          type: 'Text', 
+          text: 'fine riga' 
+      });
   } else {
       // Default
       replyMessages.push({
           type: 'Structured',
           text: 'Scegli un opzione:',
           content: [
-              { contentType: 'QuickReply', quickReply: { text: 'menu', payload: 'menu', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'misto', payload: 'misto', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'url', payload: 'YES', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'Stop', payload: 'stop', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'No', payload: 'NO', action: 'Message' } }
+              { contentType: 'QuickReply', quickReply: { text: 'menu', payload: '', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'misto', payload: '', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'url', payload: '', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'quick', payload: '', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'stop', payload: '', action: 'Message' } }
           ]
       });
   }
