@@ -57,17 +57,17 @@ app.post('/botconnector', (req, res) => {
   let replyMessages = [];
 
   // --- LOGICA UNIFICATA (Catena if-else if) ---
-  if (userPayload === 'THUMB_UP' || userText === '👍') {
-      replyMessages.push({ type: 'Text', text: 'Grazie per il feedback positivo! 😊' });
+  if (userPayload === 'THUMB_UP') {
+      replyMessages.push({ type: 'Text', text: '*Grazie* per il feedback positivo! 😊' });
 
-  } else if (userPayload === 'THUMB_DOWN' || userText === '👎') {
+  } else if (userPayload === 'THUMB_DOWN') {
       replyMessages.push({ type: 'Text', text: 'Mi dispiace. Cercherò di migliorare.' });
 
-  } else if (userPayload === 'CMD_YES' || userText === 'CMD_YES') {
-      replyMessages.push({ type: 'Text', text: 'Hai premuto SÌ (Payload ricevuto: CMD_YES)' });
+  } else if (userPayload === 'CMD_YES') {
+      replyMessages.push({ type: 'Text', text: 'Hai premuto SÌ (Payload ricevuto: *CMD_YES* )' });
 
-  } else if (userPayload === 'CMD_NO' || userText === 'CMD_NO') {
-      replyMessages.push({ type: 'Text', text: 'Hai premuto NO (Payload ricevuto: CMD_NO)' });
+  } else if (userPayload === 'CMD_NO') {
+      replyMessages.push({ type: 'Text', text: '(Payload ricevuto: *CMD_NO*)' });
 
   } else if (/stop|esci/i.test(userText)) {
       botState = 'COMPLETE';
@@ -121,7 +121,7 @@ app.post('/botconnector', (req, res) => {
   } else if (/menu/i.test(userText)) {
       replyMessages.push({
           type: 'Structured',
-          text: 'Menu Comandi:',
+          text: 'Menu *Comandi*',
           content: [
               { 
                   contentType: 'Card', 
@@ -129,6 +129,7 @@ app.post('/botconnector', (req, res) => {
                       title: 'Opzioni Avanzate',
                       description: 'Scegli un comando',
                       image: 'https://www.iamcp.it/wp-content/uploads/elementor/thumbs/asystel-bdf-logo-r4sb0gx88pw01x01dr5oderdte58k5kjss5erqmsjk.png',
+                      defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' },
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' }, 
                           { type: 'Postback', text: 'Menu', payload: 'menu' }
@@ -149,7 +150,7 @@ app.post('/botconnector', (req, res) => {
                       title: 'Card #1',
                       description: 'Scegli',
                     image: 'https://www.iamcp.it/wp-content/uploads/elementor/thumbs/asystel-bdf-logo-r4sb0gx88pw01x01dr5oderdte58k5kjss5erqmsjk.png',
-                     defaultAction: { type: 'Postback', text: 'Menu', payload: 'https://www.asystel-bdf.it/' },
+                     defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' },
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' },
                           { type: 'Postback', text: 'start', payload: 'start' }
@@ -179,7 +180,14 @@ app.post('/botconnector', (req, res) => {
       });
       replyMessages.push({ 
           type: 'Text', 
-          text: 'Markdown:\n# Titolo principale\nQuesto è un *paragrafo* _corsivo_ con un [link](https://example.com).\n- Primo elemento\n- Secondo elemento' 
+          text: `#Titolo principale
+          ##Sottotitolo
+
+Questo è un *paragrafo* con un [link](https://example.com).
+~~testo strike~~
+_Testo italico_ e _**grassetto**_
+1. Primo elemento
+2. Secondo elemento`
       });
    // 2. MArkdown
     replyMessages.push({ type: 'Text', text: 'Ecco il link formattato: [Google](https://www.google.com)' });
