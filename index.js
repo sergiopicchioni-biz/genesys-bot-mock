@@ -118,7 +118,7 @@ app.post('/botconnector', (req, res) => {
                          { 
                   contentType: 'QuickReply', 
                   quickReply: { 
-                      text: '*Forse*' , 
+                      text: 'Forse' , 
                       payload: 'Forse', 
                       action: 'Message' 
                   } 
@@ -187,29 +187,17 @@ app.post('/botconnector', (req, res) => {
           type: 'Text', 
           text: 'Ecco una risposta mista: un testo, un testo con markdown e una domanda.' 
       });
+      // 2. MArkdown
       replyMessages.push({ 
           type: 'Text', 
-          text: `# Titolo principale
-          ## Sottotitolo
-
-Questo è un *paragrafo* con un [link](https://example.com).
+          text: `Questo è *grassetto* con un [link](https://example.com).
 ~~testo strike~~
-_Testo italico_ e _**grassetto**_
-[text to format](#font-size 22px, #color red, #highlight yellow)
-This is ==highlighted== text 
-[text to highlight](#highlight #FFFF00)
-[text to change font size](#font-size 200%)
-:smiley: :sunglasses:
-| Heading | Heading 2 | Heading 3 |
-| ——–| ——–| ——–|
-| content | content | content
-
+_Testo italico_ e _*grassetto italico*_
+Questo invece è  ==Evidenziato==  
+Lista:
 1. Primo elemento
 2. Secondo elemento`
       });
-   // 2. MArkdown
-    replyMessages.push({ type: 'Text', text: 'Ecco il link formattato: [Google](https://www.google.com)' });
-
 
       // 3. Quick Reply (Pollici Su/Giù)
       replyMessages.push({
@@ -258,9 +246,10 @@ This is ==highlighted== text
     replymessages: replyMessages,
     // Meglio usare body.session direttamente se possibile, altrimenti assicurati che body.botSessionId esista!
     session: body.session || {
-      botSessionId: body.botSessionId || 'unknown',
-      genesysConversationId: body.genesysConversationId || 'unknown',
-      languageCode: body.languageCode || 'it-it'
+      //botSessionId: body.botSessionId || 'unknown',
+      botSessionId: 'BotConnector_sessionID',
+      genesysConversationId: body.genesysConversationId || 'unknown'
+     //,languageCode: body.languageCode || 'it-it'
     }
   };
 
