@@ -166,10 +166,10 @@ app.post('/botconnector', (req, res) => {
                   contentType: 'Card', 
                   card: {
                      image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
-                      defaultAction: { 
+                    /*  defaultAction: { 
                            type: 'Link',  
                            url: 'http://www.samplesite.com/flights/norway'
-                      },
+                      },*/
                       actions: [
                           { type: 'Postback', text: 'DeepLink', payload: 'myapp://product123' },
                           { type: 'Postback', text: 'Menu', payload: 'menu' }
@@ -179,7 +179,7 @@ app.post('/botconnector', (req, res) => {
           ]
       });
 
-  } else if (/carousel/i.test(userText)) {
+  }  else if (/carousel/i.test(userText)) {
       replyMessages.push({
           type: 'Structured',
           content: [{ 
@@ -189,8 +189,37 @@ app.post('/botconnector', (req, res) => {
                     {
                       title: 'Card #1',
                       description: 'Scegli',
-                      image: 'https://dummyimage.com/200x100/000000/fff.jpg&text=Image...',
-                      defaultAction: { type: 'Link' ,url: 'http://www.example.com' }, 
+                    /*  image: 'https://dummyimage.com/200x100',*/
+                      actions: [
+                          { type: 'Link', text: 'DeepLink', url: 'myapp://product123' },
+                          { type: 'Postback', text: 'Menu', payload: 'menu' }
+                      ]
+                    },
+                    {
+                      title: 'Card #2',
+                      description: 'Opzioni',
+                     /* image: 'https://dummyimage.com/200x100/00ff00/fff.jpg',
+                      defaultAction: { type: 'Link', url: 'https://www.google.com' }, */
+                      actions: [
+                          { type: 'Postback', text: 'url', payload: 'url' },
+                          { type: 'Postback', text: 'misto', payload: 'misto' }
+                      ]
+                    }
+                ]
+            }
+          }]
+      });else if (/car2/i.test(userText)) {
+      replyMessages.push({
+          type: 'Structured',
+          content: [{ 
+            contentType: 'Carousel',
+            carousel: {
+                cards: [
+                    {
+                      title: 'Card #1',
+                      description: 'Scegli',
+                      image: 'https://dummyimage.com/200x100',
+                    /*  defaultAction: { type: 'Link' ,url: 'http://www.example.com' }, */
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' },
                           { type: 'Postback', text: 'Menu', payload: 'menu' }
@@ -200,7 +229,7 @@ app.post('/botconnector', (req, res) => {
                       title: 'Card #2',
                       description: 'Opzioni',
                       image: 'https://dummyimage.com/200x100/00ff00/fff.jpg',
-                      defaultAction: { type: 'Link', url: 'https://www.google.com' }, 
+                  /*    defaultAction: { type: 'Link', url: 'https://www.google.com' }, */
                       actions: [
                           { type: 'Postback', text: 'url', payload: 'url' },
                           { type: 'Postback', text: 'misto', payload: 'misto' }
