@@ -82,7 +82,7 @@ app.post('/botconnector', (req, res) => {
               {
                   contentType: 'Card',
                   card: {
-                      title: '*GC Card*',
+                      title: 'GC Card',
                       description: 'Clicca!',
                       actions: [
                           { type: 'Link', text: 'Apri Google', url: 'https://www.google.com' },
@@ -102,7 +102,7 @@ app.post('/botconnector', (req, res) => {
               { 
                   contentType: 'QuickReply', 
                   quickReply: { 
-                      text: '*SI* 👍', // Testo visibile 
+                      text: 'SI 👍', // Testo visibile 
                       payload: 'CMD_YES', 
                       action: 'Message' 
                   } 
@@ -110,7 +110,7 @@ app.post('/botconnector', (req, res) => {
               { 
                   contentType: 'QuickReply', 
                   quickReply: { 
-                      text: '*NO* 👎', 
+                      text: 'NO 👎', 
                       payload: 'CMD_NO', 
                       action: 'Message' 
                   } 
@@ -122,16 +122,7 @@ app.post('/botconnector', (req, res) => {
                       payload: 'Forse', 
                       action: 'Message' 
                   } 
-              },
-                         { 
-                  contentType: 'QuickReply', 
-                  quickReply: { 
-                      text: '*4* ', 
-                      payload: 'CMD_NO', 
-                      action: 'Message' 
-                  } 
-              }
-           
+              }           
           ]
       });
 
@@ -144,7 +135,7 @@ app.post('/botconnector', (req, res) => {
                   contentType: 'Card', 
                   card: {
                       title: 'Opzioni Avanzate',
-                      description: 'Scegli una _*azione*_',
+                      description: 'Scegli una azione',
                       image: 'https://www.iamcp.it/wp-content/uploads/elementor/thumbs/asystel-bdf-logo-r4sb0gx88pw01x01dr5oderdte58k5kjss5erqmsjk.png',
                       defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' },
                       actions: [
@@ -190,11 +181,11 @@ app.post('/botconnector', (req, res) => {
           }]
       });
   } else if (/misto/i.test(userText)) {
-      // RISPOSTA MULTIPLA (Testo + Card + QuickReply)
+      // RISPOSTA MULTIPLA (Testo +  QuickReply)
       // 1. Messaggio di testo introduttivo
       replyMessages.push({ 
           type: 'Text', 
-          text: 'Ecco una risposta mista: un testo, un link e una domanda.' 
+          text: 'Ecco una risposta mista: un testo, un testo con markdown e una domanda.' 
       });
       replyMessages.push({ 
           type: 'Text', 
@@ -204,6 +195,15 @@ app.post('/botconnector', (req, res) => {
 Questo è un *paragrafo* con un [link](https://example.com).
 ~~testo strike~~
 _Testo italico_ e _**grassetto**_
+[text to format](#font-size 22px, #color red, #highlight yellow)
+This is ==highlighted== text 
+[text to highlight](#highlight #FFFF00)
+[text to change font size](#font-size 200%)
+:smiley: :sunglasses:
+| Heading | Heading 2 | Heading 3 |
+| ——–| ——–| ——–|
+| content | content | content
+
 1. Primo elemento
 2. Secondo elemento`
       });
