@@ -243,19 +243,26 @@ Lista:
     botState,
     intent: intentName,
     confidence: 1,
-    replymessages: replyMessages,
-    // Meglio usare body.session direttamente se possibile, altrimenti assicurati che body.botSessionId esista!
+    replymessages: replyMessages
     session: body.session || {
-      //botSessionId: body.botSessionId || 'unknown',
       botSessionId: 'BotConnector_sessionID',
       genesysConversationId: body.genesysConversationId || 'unknown'
-     //,languageCode: body.languageCode || 'it-it'
     }
   };
+  // ⭐ AGGIUNGI PARAMETRI PRIMA DI INVIARE LA RISPOSTA
+  if (botState === 'COMPLETE' || intentName === 'handover') {
+    response.parameters = {
+      parameter1: 'value1',
+      parameter2: 'value2',
+      exitReason: intentName,
+      timestamp: new Date().toISOString()
+    };
+  }
 
   console.log('Risposta BotConnector:', JSON.stringify(response, null, 2));
-  return res.json(response);
+  return res.json(response);  // ← SOLO QUI invii la risposta
 });
+
 
 
 const PORT = process.env.PORT || 3000;
