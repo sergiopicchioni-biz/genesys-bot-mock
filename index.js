@@ -208,7 +208,8 @@ app.post('/botconnector', (req, res) => {
                 ]
             }
           }]
-      });else if (/car2/i.test(userText)) {
+      });
+   } else if (/car2/i.test(userText)) {
       replyMessages.push({
           type: 'Structured',
           content: [{ 
