@@ -128,6 +128,7 @@ app.post('/botconnector', (req, res) => {
                   card: {
                       title: 'Opzioni Avanzate',
                       description: 'Scegli un comando',
+                      image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' }, 
                           { type: 'Postback', text: 'Menu', payload: 'menu' }
@@ -177,7 +178,7 @@ app.post('/botconnector', (req, res) => {
                     {
                       title: 'Card #1',
                       description: 'Scegli',
-                    /*  image: 'https://dummyimage.com/200x100',*/
+                    image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' },
                           { type: 'Postback', text: 'start', payload: 'start' }
@@ -187,7 +188,7 @@ app.post('/botconnector', (req, res) => {
                       title: 'Card #2',
                       description: 'Opzioni',
                       image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
-                     /*  defaultAction: { type: 'Link', url: 'https://www.google.com' }, */
+                      defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' }, 
                       actions: [
                           { type: 'Postback', text: 'url', payload: 'url' },
                           { type: 'Postback', text: 'misto', payload: 'misto' }
