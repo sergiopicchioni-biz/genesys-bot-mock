@@ -137,49 +137,7 @@ app.post('/botconnector', (req, res) => {
           ]
       });
 
-  } else if (/men2/i.test(userText)) {
-      replyMessages.push({
-          type: 'Structured',
-          text: 'Menu 2 img:',
-          content: [
-              { 
-                  contentType: 'Card', 
-                  card: {
-                      description: 'Scegli un comando',
-                     image: 'https://dummyimage.com/200x100/000000/fff.jpg',
-
-                      actions: [
-                          { type: 'Postback', text: 'DeepLink', payload: 'myapp://product123' },
-                          { type: 'Postback', text: 'Menu', payload: 'menu' }
-                      ]
-                  }
-              }
-          ]
-      });
-
-  } else if (/men3/i.test(userText)) {
-      replyMessages.push({
-          type: 'Structured',
-          text: 'Menu 3 full:',
-          content: [
-              { 
-                  contentType: 'Card', 
-                  card: {
-                     image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
-                    /*  defaultAction: { 
-                           type: 'Link',  
-                           url: 'http://www.samplesite.com/flights/norway'
-                      },*/
-                      actions: [
-                          { type: 'Postback', text: 'DeepLink', payload: 'myapp://product123' },
-                          { type: 'Postback', text: 'Menu', payload: 'menu' }
-                      ]
-                  }
-              }
-          ]
-      });
-
-  }  else if (/carousel/i.test(userText)) {
+  } else if (/carousel/i.test(userText)) {
       replyMessages.push({
           type: 'Structured',
           content: [{ 
@@ -219,18 +177,17 @@ app.post('/botconnector', (req, res) => {
                     {
                       title: 'Card #1',
                       description: 'Scegli',
-                      image: 'https://dummyimage.com/200x100',
-                    /*  defaultAction: { type: 'Link' ,url: 'http://www.example.com' }, */
+                    /*  image: 'https://dummyimage.com/200x100',*/
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' },
-                          { type: 'Postback', text: 'Menu', payload: 'menu' }
+                          { type: 'Postback', text: 'start', payload: 'start' }
                       ]
                     },
                     {
                       title: 'Card #2',
                       description: 'Opzioni',
-                      image: 'https://dummyimage.com/200x100/00ff00/fff.jpg',
-                  /*    defaultAction: { type: 'Link', url: 'https://www.google.com' }, */
+                      image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
+                     /*  defaultAction: { type: 'Link', url: 'https://www.google.com' }, */
                       actions: [
                           { type: 'Postback', text: 'url', payload: 'url' },
                           { type: 'Postback', text: 'misto', payload: 'misto' }
@@ -250,7 +207,7 @@ app.post('/botconnector', (req, res) => {
       });
       replyMessages.push({ 
           type: 'Text', 
-          text: 'seconda riga' 
+          text: 'MArkdown: # Titolo principale Questo è un **paragrafo** con un [link](https://example.com). - Primo elemento - Secondo elemento ' 
       });
    // 2. MArkdown
     replyMessages.push({ type: 'Text', text: 'Ecco il link formattato: [Google](https://www.google.com)' });
