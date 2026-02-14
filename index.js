@@ -128,7 +128,7 @@ app.post('/botconnector', (req, res) => {
                   card: {
                       title: 'Opzioni Avanzate',
                       description: 'Scegli un comando',
-                      image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
+                      image: 'https://www.iamcp.it/wp-content/uploads/elementor/thumbs/asystel-bdf-logo-r4sb0gx88pw01x01dr5oderdte58k5kjss5erqmsjk.png',
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' }, 
                           { type: 'Postback', text: 'Menu', payload: 'menu' }
@@ -148,37 +148,8 @@ app.post('/botconnector', (req, res) => {
                     {
                       title: 'Card #1',
                       description: 'Scegli',
-                    /*  image: 'https://dummyimage.com/200x100',*/
-                      actions: [
-                          { type: 'Link', text: 'DeepLink', url: 'myapp://product123' },
-                          { type: 'Postback', text: 'Menu', payload: 'menu' }
-                      ]
-                    },
-                    {
-                      title: 'Card #2',
-                      description: 'Opzioni',
-                     /* image: 'https://dummyimage.com/200x100/00ff00/fff.jpg',
-                      defaultAction: { type: 'Link', url: 'https://www.google.com' }, */
-                      actions: [
-                          { type: 'Postback', text: 'url', payload: 'url' },
-                          { type: 'Postback', text: 'misto', payload: 'misto' }
-                      ]
-                    }
-                ]
-            }
-          }]
-      });
-   } else if (/car2/i.test(userText)) {
-      replyMessages.push({
-          type: 'Structured',
-          content: [{ 
-            contentType: 'Carousel',
-            carousel: {
-                cards: [
-                    {
-                      title: 'Card #1',
-                      description: 'Scegli',
-                    image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
+                    image: 'https://www.iamcp.it/wp-content/uploads/elementor/thumbs/asystel-bdf-logo-r4sb0gx88pw01x01dr5oderdte58k5kjss5erqmsjk.png',
+                     defaultAction: { type: 'Postback', text: 'Menu', payload: 'https://www.asystel-bdf.it/' },
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' },
                           { type: 'Postback', text: 'start', payload: 'start' }
@@ -208,7 +179,7 @@ app.post('/botconnector', (req, res) => {
       });
       replyMessages.push({ 
           type: 'Text', 
-          text: 'MArkdown: # Titolo principale Questo è un **paragrafo** con un [link](https://example.com). - Primo elemento - Secondo elemento ' 
+          text: 'Markdown:\n# Titolo principale\nQuesto è un *paragrafo* _corsivo_ con un [link](https://example.com).\n- Primo elemento\n- Secondo elemento' 
       });
    // 2. MArkdown
     replyMessages.push({ type: 'Text', text: 'Ecco il link formattato: [Google](https://www.google.com)' });
