@@ -82,7 +82,7 @@ app.post('/botconnector', (req, res) => {
               {
                   contentType: 'Card',
                   card: {
-                      title: 'GC Card',
+                      title: '*GC Card*',
                       description: 'Clicca!',
                       actions: [
                           { type: 'Link', text: 'Apri Google', url: 'https://www.google.com' },
@@ -97,24 +97,41 @@ app.post('/botconnector', (req, res) => {
       // Quick Reply (Pollici Su/Giù)
       replyMessages.push({
           type: 'Structured',
-          text: 'Ti è stato utile?', // Obbligatorio per Quick Reply
+          text: 'Vuoi continuare?', // Obbligatorio per Quick Reply
           content: [
               { 
                   contentType: 'QuickReply', 
                   quickReply: { 
-                      text: '👍', // Testo visibile (Emoji)
-                      payload: 'THUMB_UP', 
+                      text: '*SI* 👍', // Testo visibile 
+                      payload: 'CMD_YES', 
                       action: 'Message' 
                   } 
               },
               { 
                   contentType: 'QuickReply', 
                   quickReply: { 
-                      text: '👎', 
-                      payload: 'THUMB_DOWN', 
+                      text: '*NO* 👎', 
+                      payload: 'CMD_NO', 
+                      action: 'Message' 
+                  } 
+              },
+                         { 
+                  contentType: 'QuickReply', 
+                  quickReply: { 
+                      text: '*Forse*' , 
+                      payload: 'Forse', 
+                      action: 'Message' 
+                  } 
+              },
+                         { 
+                  contentType: 'QuickReply', 
+                  quickReply: { 
+                      text: '*4* ', 
+                      payload: 'CMD_NO', 
                       action: 'Message' 
                   } 
               }
+           
           ]
       });
 
@@ -127,12 +144,13 @@ app.post('/botconnector', (req, res) => {
                   contentType: 'Card', 
                   card: {
                       title: 'Opzioni Avanzate',
-                      description: 'Scegli un comando',
+                      description: 'Scegli una _*azione*_',
                       image: 'https://www.iamcp.it/wp-content/uploads/elementor/thumbs/asystel-bdf-logo-r4sb0gx88pw01x01dr5oderdte58k5kjss5erqmsjk.png',
                       defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' },
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' }, 
-                          { type: 'Postback', text: 'Menu', payload: 'menu' }
+                          { type: 'Postback', text: 'Menu', payload: 'menu' },
+                          { type: 'Postback', text: '*Start*', payload: 'GO' }
                       ]
                   }
               }
@@ -153,6 +171,7 @@ app.post('/botconnector', (req, res) => {
                      defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' },
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' },
+                          { type: 'Postback', text: 'DeepLink', payload: '*' },
                           { type: 'Postback', text: 'start', payload: 'start' }
                       ]
                     },
@@ -172,7 +191,6 @@ app.post('/botconnector', (req, res) => {
       });
   } else if (/misto/i.test(userText)) {
       // RISPOSTA MULTIPLA (Testo + Card + QuickReply)
-      
       // 1. Messaggio di testo introduttivo
       replyMessages.push({ 
           type: 'Text', 
@@ -180,8 +198,8 @@ app.post('/botconnector', (req, res) => {
       });
       replyMessages.push({ 
           type: 'Text', 
-          text: `#Titolo principale
-          ##Sottotitolo
+          text: `# Titolo principale
+          ## Sottotitolo
 
 Questo è un *paragrafo* con un [link](https://example.com).
 ~~testo strike~~
