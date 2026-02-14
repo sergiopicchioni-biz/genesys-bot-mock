@@ -243,7 +243,7 @@ Lista:
     botState,
     intent: intentName,
     confidence: 1,
-    replymessages: replyMessages
+    replymessages: replyMessages,
     session: body.session || {
       botSessionId: 'BotConnector_sessionID',
       genesysConversationId: body.genesysConversationId || 'unknown'
@@ -252,8 +252,7 @@ Lista:
   // ⭐ AGGIUNGI PARAMETRI PRIMA DI INVIARE LA RISPOSTA
   if (botState === 'COMPLETE' || intentName === 'handover') {
     response.parameters = {
-      parameter1: 'value1',
-      parameter2: 'value2',
+      parameter1: 'value 1',
       exitReason: intentName,
       timestamp: new Date().toISOString()
     };
