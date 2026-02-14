@@ -190,10 +190,18 @@ app.post('/botconnector', (req, res) => {
       // 2. MArkdown
       replyMessages.push({ 
           type: 'Text', 
-          text: `Questo è *grassetto* con un [link](https://example.com).
-~~testo strike~~
-_Testo italico_ e _*grassetto italico*_
-Questo invece è  ==Evidenziato==  
+    text: `Ecco la formattazione markdown supportata in output:
+
+*Grassetto* e _Corsivo_
+~Barrato~ e _*Grassetto Corsivo*_
+Link: [Google](https://google.com)
+Codice inline: \`var x = 1\`
+
+\`\`\`
+Blocco Codice
+Multi-linea
+\`\`\`
+
 Lista:
 1. Primo elemento
 2. Secondo elemento`
