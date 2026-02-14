@@ -157,7 +157,7 @@ app.post('/botconnector', (req, res) => {
                 cards: [
                     {
                       title: 'Card #1',
-                      description: 'Scegli',
+                      description: '⭐ Scegli',
                     image: 'https://www.iamcp.it/wp-content/uploads/elementor/thumbs/asystel-bdf-logo-r4sb0gx88pw01x01dr5oderdte58k5kjss5erqmsjk.png',
                      defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' },
                       actions: [
@@ -249,8 +249,8 @@ Lista:
       genesysConversationId: body.genesysConversationId || 'unknown'
     }
   };
-  // ⭐ AGGIUNGI PARAMETRI PRIMA DI INVIARE LA RISPOSTA
-  if (botState === 'COMPLETE' || intentName === 'handover') {
+  //  AGGIUNGI PARAMETRI PRIMA DI INVIARE LA RISPOSTA
+  if (botState === 'COMPLETE') {
     response.parameters = {
       parameter1: 'value 1',
       exitReason: intentName,
