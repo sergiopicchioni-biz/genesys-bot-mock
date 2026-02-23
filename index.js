@@ -232,6 +232,10 @@ Lista:
       });
   } else {
       // Default
+         replyMessages.push({ 
+          type: 'Text', 
+          text: 'Ho ricevuto: ' + userText + ' ('+ userPayload +')'
+      });
       replyMessages.push({
           type: 'Structured',
           text: 'Scegli un opzione:',
@@ -240,7 +244,7 @@ Lista:
               { contentType: 'QuickReply', quickReply: { text: 'misto', payload: 'misto', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'url', payload: 'url', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'carousel', payload: 'carousel', action: 'Message' } },
-             { contentType: 'QuickReply', quickReply: { text: 'quick', payload: 'quick', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'quick', payload: 'quick', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'stop', payload: 'stop', action: 'Message' } }
           ]
       });
