@@ -141,7 +141,7 @@ app.post('/botconnector', (req, res) => {
                       actions: [
                           { type: 'Link', text: 'DeepLink', url: 'myapp://product123' }, 
                           { type: 'Postback', text: 'Menu', payload: 'menu' },
-                          { type: 'Postback', text: '*Start*', payload: 'GO' }
+                          { type: 'Postback', text: 'Start', payload: 'GO' }
                       ]
                   }
               }
@@ -202,9 +202,7 @@ Blocco Codice
 Multi-linea
 \`\`\`
 
-Lista:
-1. Primo elemento
-2. Secondo elemento`
+Quessto è  ==testo evidenziato==`
       });
 
       // 3. Quick Reply (Pollici Su/Giù)
