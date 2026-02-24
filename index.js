@@ -161,7 +161,7 @@ app.post('/botconnector', (req, res) => {
                     image: 'https://www.iamcp.it/wp-content/uploads/elementor/thumbs/asystel-bdf-logo-r4sb0gx88pw01x01dr5oderdte58k5kjss5erqmsjk.png',
                      defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' },
                       actions: [
-                          { type: 'Link', text: 'DeepLink', url: 'myapp://product123' },
+                          { type: 'Link', text: 'DeepLink (url)', url: 'myapp://product123' },
                           { type: 'Postback', text: 'DeepLink', payload: '*' },
                           { type: 'Postback', text: 'start', payload: 'start' }
                       ]
@@ -174,6 +174,49 @@ app.post('/botconnector', (req, res) => {
                       actions: [
                           { type: 'Postback', text: 'url', payload: 'url' },
                           { type: 'Postback', text: 'misto', payload: 'misto' }
+                      ]
+                    },
+                    {
+                      title: 'Card #3',
+                      description: '4 Opzioni',
+                      image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
+                      defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' }, 
+                      actions: [
+                          { type: 'Postback', text: '1', payload: 'url' },
+                          { type: 'Postback', text: '2', payload: 'misto' },
+                          { type: 'Postback', text: '3', payload: 'misto' },
+                          { type: 'Postback', text: '4', payload: 'misto' }
+                      ]
+                    },
+                    {
+                      title: 'Card #4',
+                      description: '5 Opzioni',
+                      image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
+                      defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' }, 
+                      actions: [
+                          { type: 'Postback', text: '1', payload: 'url' },
+                          { type: 'Postback', text: '2', payload: 'misto' },
+                          { type: 'Postback', text: '3', payload: 'misto' },
+                          { type: 'Postback', text: '4', payload: 'misto' },
+                          { type: 'Postback', text: '5', payload: 'misto' }
+                      ]
+                    },
+                    {
+                      title: 'Card #5',
+                      description: '10 Opzioni',
+                      image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
+                      defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' }, 
+                      actions: [
+                          { type: 'Postback', text: '1', payload: 'url' },
+                          { type: 'Postback', text: '2', payload: 'misto' },
+                          { type: 'Postback', text: '3', payload: 'misto' },
+                          { type: 'Postback', text: '4', payload: 'misto' },
+                          { type: 'Postback', text: '5', payload: 'misto' },
+                        { type: 'Postback', text: '6', payload: 'misto' },
+                        { type: 'Postback', text: '7', payload: 'misto' },
+                        { type: 'Postback', text: '8', payload: 'misto' },
+                        { type: 'Postback', text: '9', payload: 'misto' },
+                        { type: 'Postback', text: '10', payload: 'misto' }
                       ]
                     }
                 ]
@@ -197,8 +240,7 @@ app.post('/botconnector', (req, res) => {
 Link: [Google](https://google.com)
 Codice inline: \`var x = 1\`
 
-\`\`\`
-Blocco Codice
+\`\`\`Blocco Codice
 Multi-linea
 \`\`\`
 
