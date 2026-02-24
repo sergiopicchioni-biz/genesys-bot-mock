@@ -184,7 +184,8 @@ app.post('/botconnector', (req, res) => {
                       actions: [
                           { type: 'Postback', text: '1', payload: 'url' },
                           { type: 'Postback', text: '2', payload: 'misto' },
-                          { type: 'Postback', text: '3', payload: 'misto' }
+                          { type: 'Postback', text: '3', payload: 'misto' },
+                          { type: 'Postback', text: '4', payload: 'misto' }
                       ]
                     }
                 ]
