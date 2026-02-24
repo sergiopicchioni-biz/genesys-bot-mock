@@ -175,18 +175,6 @@ app.post('/botconnector', (req, res) => {
                           { type: 'Postback', text: 'url', payload: 'url' },
                           { type: 'Postback', text: 'misto', payload: 'misto' }
                       ]
-                    },
-                    {
-                      title: 'Card #3',
-                      description: '4 Opzioni',
-                      image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
-                      defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' }, 
-                      actions: [
-                          { type: 'Postback', text: '1', payload: 'url' },
-                          { type: 'Postback', text: '2', payload: 'misto' },
-                          { type: 'Postback', text: '3', payload: 'misto' },
-                          { type: 'Postback', text: '4', payload: 'misto' }
-                      ]
                     }
                 ]
             }
