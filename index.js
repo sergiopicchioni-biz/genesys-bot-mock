@@ -58,26 +58,26 @@ app.post('/botconnector', (req, res) => {
 
   // --- LOGICA UNIFICATA (Catena if-else if) ---
   if (userPayload === 'THUMB_UP') {
-      replyMessages.push({ type: 'Text', text: '*Grazie* per il feedback positivo! 😊' });
+      replyMessages.push({ type: 'Text', text: '*Thank you*  😊' });
 
   } else if (userPayload === 'THUMB_DOWN') {
-      replyMessages.push({ type: 'Text', text: 'Mi dispiace. Cercherò di migliorare.' });
+      replyMessages.push({ type: 'Text', text: 'Sorry.' });
 
   } else if (userPayload === 'CMD_YES') {
-      replyMessages.push({ type: 'Text', text: 'Hai premuto SÌ (Payload ricevuto: *CMD_YES* )' });
+      replyMessages.push({ type: 'Text', text: ' (Payload: *CMD_YES* )' });
 
   } else if (userPayload === 'CMD_NO') {
-      replyMessages.push({ type: 'Text', text: '(Payload ricevuto: *CMD_NO*)' });
+      replyMessages.push({ type: 'Text', text: ' (Payload: *CMD_NO* )' });
 
   } else if (/stop|esci/i.test(userText)) {
       botState = 'COMPLETE';
       intentName = 'handover';
-      replyMessages.push({ type: 'Text', text: 'Chiusura bot.' });
+      replyMessages.push({ type: 'Text', text: 'Handover request. hold on.' });
 
   }  else if (/url/i.test(userText)) {
       replyMessages.push({
           type: 'Structured',
-          text: 'Link Utili:', 
+          text: 'Useful Links:', 
           content: [
               {
                   contentType: 'Card',
@@ -102,7 +102,7 @@ app.post('/botconnector', (req, res) => {
               { 
                   contentType: 'QuickReply', 
                   quickReply: { 
-                      text: 'SI 👍', // Testo visibile 
+                      text: 'YES 👍', // Testo visibile 
                       payload: 'CMD_YES', 
                       action: 'Message' 
                   } 
@@ -118,7 +118,7 @@ app.post('/botconnector', (req, res) => {
                          { 
                   contentType: 'QuickReply', 
                   quickReply: { 
-                      text: 'Forse' , 
+                      text: 'Perhaps' , 
                       payload: 'Forse', 
                       action: 'Message' 
                   } 
@@ -129,17 +129,17 @@ app.post('/botconnector', (req, res) => {
   } else if (/menu/i.test(userText)) {
       replyMessages.push({
           type: 'Structured',
-          text: 'Menu *Comandi*',
+          text: '*Card* text',
           content: [
               { 
                   contentType: 'Card', 
                   card: {
-                      title: 'Opzioni Avanzate',
-                      description: 'Scegli una azione',
+                      title: 'Options',
+                      description: 'Choose one',
                       image: 'https://www.iamcp.it/wp-content/uploads/elementor/thumbs/asystel-bdf-logo-r4sb0gx88pw01x01dr5oderdte58k5kjss5erqmsjk.png',
                       defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' },
                       actions: [
-                          { type: 'Link', text: 'DeepLink', url: 'myapp://product123' }, 
+                          { type: 'Link', text: 'DeepLink Simulation', url: 'myapp://product123' }, 
                           { type: 'Postback', text: 'Menu', payload: 'menu' },
                           { type: 'Postback', text: 'Start', payload: 'GO' }
                       ]
@@ -157,7 +157,7 @@ app.post('/botconnector', (req, res) => {
                 cards: [
                     {
                       title: 'Card #1',
-                      description: '⭐ Scegli',
+                      description: '⭐ Choose',
                     image: 'https://www.iamcp.it/wp-content/uploads/elementor/thumbs/asystel-bdf-logo-r4sb0gx88pw01x01dr5oderdte58k5kjss5erqmsjk.png',
                      defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' },
                       actions: [
@@ -168,7 +168,7 @@ app.post('/botconnector', (req, res) => {
                     },
                     {
                       title: 'Card #2',
-                      description: 'Opzioni',
+                      description: 'Options',
                       image: 'https://www.assintel.it/wp-content/uploads/avatars/1756/5c8a553e832d2-bpfull.png',
                       defaultAction: { type: 'Link', url: 'https://www.asystel-bdf.it/' }, 
                       actions: [
@@ -185,29 +185,46 @@ app.post('/botconnector', (req, res) => {
       // 1. Messaggio di testo introduttivo
       replyMessages.push({ 
           type: 'Text', 
-          text: 'Ecco una risposta mista: un testo, un testo con markdown e una domanda.' 
+          text: 'Here is a mixed response: a complex text, a text with supported markdowns, and a quick reply.' 
       });
-      // 2. MArkdown
+         replyMessages.push({ 
+          type: 'Text', 
+          text: `
+TITLE*
+
+Streamline visibility benchmark expansion stakeholder alignment. Prioritization vertical innovation capacity strategy paradigm. Touchpoint disruption margin visibility accountability proactive synergy, actionable touchpoint assets capacity optimization sustainability.
+
+Ecosystem profit capability _integration framework_ actionable productivity integration. Empowerment funnel acquisition hierarchy effectiveness empowerment implementation pipeline ecosystem pipeline. Accountability proactive productivity integration strategy synergy synergy sustainability profit framework innovation horizontal.
+
+You can [click her to see our offer](https://google.com)
+
+Efficiency transformation acquisition benchmark stakeholder. Implementation paradigm capacity visibility pipeline standardization engagement growth structure paradigm actionable hierarchy competency monetization. Resources roadmap alignment stakeholder leverage optimize transformation capacity. Pipeline proactive vertical hierarchy transformation robust innovation, touchpoint facilitation horizontal profit strategy alignment. Matrix facilitation innovation flexibility initiative, profit profit horizontal agility.
+`
+      });
+      // 2. Markdown
       replyMessages.push({ 
           type: 'Text', 
     text: `Ecco la formattazione markdown supportata in output:
 
-*Grassetto* e _Corsivo_
-~Barrato~ e _*Grassetto Corsivo*_
-Link: [Google](https://google.com)
-Codice inline: \`var x = 1\`
+This is *bold* text
+This is _italics_ text
+This is ~strikethrough~ text 
+This is _*bold & italic*_ text
+This is a hyperlink: [Google](https://google.com)
+This is `monospace` text 
 
-\`\`\`Blocco Codice
-Multi-linea
+\`\`\`This is a 
+code block
 \`\`\`
 
-Quessto è  ==testo evidenziato==`
+This is ==highlighted== text 
+`
       });
 
       // 3. Quick Reply (Pollici Su/Giù)
       replyMessages.push({
           type: 'Structured',
-          text: 'Ti è stato utile?', // Obbligatorio per Quick Reply
+          text: 'Was it helpful to you?', // Obbligatorio per Quick Reply
           content: [
               { 
                   contentType: 'QuickReply', 
@@ -229,20 +246,21 @@ Quessto è  ==testo evidenziato==`
       });
   } else {
       // Default
+   /*
          replyMessages.push({ 
           type: 'Text', 
           text: 'Ho ricevuto: ' + userText + ' ('+ userPayload +')'
-      });
+      });*/
       replyMessages.push({
           type: 'Structured',
-          text: 'Scegli un opzione:',
+          text: 'Choose an *option*:',
           content: [
               { contentType: 'QuickReply', quickReply: { text: 'menu', payload: 'menu', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'misto', payload: 'misto', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'url', payload: 'url', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'card with url', payload: 'url', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'carousel', payload: 'carousel', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'quick', payload: 'quick', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'stop', payload: 'stop', action: 'Message' } }
+              { contentType: 'QuickReply', quickReply: { text: 'quick replay', payload: 'quick', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'stop bot', payload: 'stop', action: 'Message' } }
           ]
       });
   }
