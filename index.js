@@ -180,7 +180,7 @@ app.post('/botconnector', (req, res) => {
             }
           }]
       });
-  } else if (/misto/i.test(userText)) {
+  } else if (/mix/i.test(userText)) {
       // RISPOSTA MULTIPLA (Testo +  QuickReply)
       // 1. Messaggio di testo introduttivo
       replyMessages.push({ 
@@ -190,7 +190,7 @@ app.post('/botconnector', (req, res) => {
          replyMessages.push({ 
           type: 'Text', 
           text: `
-TITLE*
+*TITLE*
 
 Streamline visibility benchmark expansion stakeholder alignment. Prioritization vertical innovation capacity strategy paradigm. Touchpoint disruption margin visibility accountability proactive synergy, actionable touchpoint assets capacity optimization sustainability.
 
@@ -256,10 +256,10 @@ This is ==highlighted== text
           text: 'Choose an *option*:',
           content: [
               { contentType: 'QuickReply', quickReply: { text: 'menu', payload: 'menu', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'misto', payload: 'misto', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'mix', payload: 'misto', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'card with url', payload: 'url', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'carousel', payload: 'carousel', action: 'Message' } },
-              { contentType: 'QuickReply', quickReply: { text: 'quick replay', payload: 'quick', action: 'Message' } },
+              { contentType: 'QuickReply', quickReply: { text: 'quick reply', payload: 'quick', action: 'Message' } },
               { contentType: 'QuickReply', quickReply: { text: 'stop bot', payload: 'stop', action: 'Message' } }
           ]
       });
