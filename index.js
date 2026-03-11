@@ -211,7 +211,7 @@ This is _italics_ text
 This is ~strikethrough~ text 
 This is _*bold & italic*_ text
 This is a hyperlink: [Google](https://google.com)
-This is `monospace` text 
+This is \`monospace\` text 
 
 \`\`\`This is a 
 code block
